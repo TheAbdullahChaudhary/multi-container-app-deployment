@@ -1,7 +1,10 @@
 version: '3.8'
+
 services:
   api:
-    build: ./api
+    build:
+      context: ./api
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     depends_on:
@@ -10,12 +13,15 @@ services:
       - MONGO_URL=mongodb://mongo:27017/todos
     volumes:
       - ./api:/app
+    command: npm start
+
   mongo:
-    image: mongo
+    image: mongo:6
     restart: always
     ports:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+
 volumes:
   mongo-data:
